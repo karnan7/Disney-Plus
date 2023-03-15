@@ -18,6 +18,9 @@ const Viewers = () => {
         </Wrap>
         <Wrap>
             <img src='/images/viewers-marvel.png' alt='viewers'/>
+            <video autoplay plays-inline muted loop>
+                <source src='/videos/pixar.mp4'  type="video/mp4"/>
+            </video>
         </Wrap>
         <Wrap>
             <img src='/images/viewers-starwars.png' alt='viewers'/>
