@@ -2,34 +2,39 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Viewers = () => {
+    
   return (
     <Container>
         <Wrap>
             <img src='/images/viewers-disney.png' alt='viewers'/>
-            <video  autoplay plays-inline muted loop > 
+            <video autoPlay={true} loop={true} playsInline={true} muted={true}> 
                 <source src="/videos/disney.mp4" type="video/mp4"/> 
+                Your browser does not support the video tag.
             </video>
         </Wrap>
         <Wrap>
             <img src='/images/viewers-pixar.png' alt='viewers'/>
-            <video autoplay plays-inline muted loop>
+            <video autoPlay={true} loop={true} playsInline={true} muted={true}>
                 <source src='/videos/pixar.mp4'  type="video/mp4"/>
             </video>
         </Wrap>
-        <Wrap>
+        <Wrap >
             <img src='/images/viewers-marvel.png' alt='viewers'/>
-            <video autoplay plays-inline muted loop>
-                <source src='/videos/pixar.mp4'  type="video/mp4"/>
+            <video autoPlay={true} loop={true} playsInline={true} muted={true}>
+                <source src='/videos/marvel.mp4'  type="video/mp4"/>
             </video>
         </Wrap>
         <Wrap>
             <img src='/images/viewers-starwars.png' alt='viewers'/>
-            <video autoplay plays-inline muted loop>
-                <source src='/videos/pixar.mp4'  type="video/mp4"/>
+            <video autoPlay={true} loop={true} playsInline={true} muted={true}>
+                <source src='/videos/starwars.mp4'  type="video/mp4"/>
             </video>
         </Wrap>
         <Wrap>
             <img src='/images/viewers-national.png' alt='viewers'/>
+            <video autoPlay={true} loop={true} playsInline={true} muted={true}>
+                <source src='/videos/national.mp4'  type="video/mp4"/>
+            </video>
         </Wrap>
     </Container>
   )
@@ -43,6 +48,10 @@ const Container = styled.div`
     grid-template-columns: repeat(5, minmax(0, 1fr));
     grid-gap: 25px;
     padding: 30px 0px 26px;
+
+    @media(max-width:768px){
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
 `
 
 const Wrap = styled.div`

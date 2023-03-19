@@ -39,6 +39,7 @@ const Header = () => {
 export default Header;
 
 const Nav = styled.nav`
+    // position:fixed;
     height: 70px;
     background: #090b13;
     display: flex;
