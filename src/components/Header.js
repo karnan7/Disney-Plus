@@ -1,7 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import {auth, provider} from "../config/firebase"
 
 const Header = () => {
+    
+    const handleSignIn = () => {
+        auth
+        .signInWithPopup(provider)
+        .then((result) => {
+            console.log(result)
+        })
+        .catch((error) => {
+            alert(error.message)
+        });
+    }
   return (
     <Nav>
         <Logo src='./images/logo.svg'/>
@@ -32,6 +44,7 @@ const Header = () => {
             </a>
         </NavMenu>
         <UserImg src="./images/Adith.jpg"/>
+        <Login onClick={handleSignIn}>Login</Login>
     </Nav>
   )
 }
@@ -93,6 +106,10 @@ const NavMenu = styled.div`
                 transform: scaleX(1);
             }
         }
+
+        @media (max-width:768px){
+            display:none;
+        }
     }
 `
 const UserImg = styled.img`
@@ -100,4 +117,21 @@ const UserImg = styled.img`
     width: 50px;
     border-radius: 50%;
     cursor: pointer;
+`
+const Login = styled.a`
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 16px;
+    border: 1px solid #f9f9f9;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 250ms ease-in-out;
+    cursor:pointer;
+
+    &:hover{
+        background: #f9f9f9;
+        color: #000;
+        border-color: transparent;
+    }
+
 `
