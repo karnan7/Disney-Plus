@@ -1,50 +1,107 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import {auth, provider} from "../config/firebase"
+import {useDispatch,useSelector} from 'react-redux';
+import { useNavigate} from 'react-router-dom';
+import {
+    selectUserEmail,
+    selectUserName,
+    selectUserPhoto,
+    selectUserLoginDetails,
+    setUserLoginDetails,
+    setSignOutState
+} from '../features/user/userSlice'
 
 const Header = () => {
-    
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const userName = useSelector(selectUserName)
+    const userPhoto = useSelector(selectUserPhoto)
+
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user) => {
+            if(user){
+                setUser(user);
+                navigate("/")
+            }
+        })
+    }, [userName])
+
     const handleSignIn = () => {
         auth
         .signInWithPopup(provider)
         .then((result) => {
-            console.log(result)
+           setUser(result.user);
         })
         .catch((error) => {
             alert(error.message)
         });
     }
+
+    const handleLogOut = () => {
+        auth
+        .signOut()
+        .then(() => {
+            dispatch(setSignOutState());
+            navigate("/login")
+        })
+        .catch((error) => error.message);
+    }
+
+    const setUser = (user) => {
+        dispatch(
+            setUserLoginDetails({
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL
+            })
+        );
+    };
+
   return (
     <Nav>
         <Logo src='./images/logo.svg'/>
-        <NavMenu>
-            <a>
-                <img src='./images/home-icon.svg'/>
-                <span>HOME</span>
-            </a>
-            <a>
-                <img src='./images/search-icon.svg'/>
-                <span>SEARCH</span>
-            </a>
-            <a>
-                <img src='./images/watchlist-icon.svg'/>
-                <span>WATCHLIST</span>
-            </a>
-            <a>
-                <img src='./images/original-icon.svg'/>
-                <span>ORIGINAL</span>
-            </a>
-            <a>
-                <img src='./images/movie-icon.svg'/>
-                <span>MOVIES</span>
-            </a>
-            <a>
-                <img src='./images/series-icon.svg'/>
-                <span>SERIES</span>
-            </a>
-        </NavMenu>
-        <UserImg src="./images/Adith.jpg"/>
-        <Login onClick={handleSignIn}>Login</Login>
+        {
+            (userName) ? (
+                <>
+                <NavMenu>
+                    <a href='/'>
+                        <img src='./images/home-icon.svg'/>
+                        <span>HOME</span>
+                    </a>
+                    <a>
+                        <img src='./images/search-icon.svg'/>
+                        <span>SEARCH</span>
+                    </a>
+                    <a>
+                        <img src='./images/watchlist-icon.svg'/>
+                        <span>WATCHLIST</span>
+                    </a>
+                    <a>
+                        <img src='./images/original-icon.svg'/>
+                        <span>ORIGINAL</span>
+                    </a>
+                    <a>
+                        <img src='./images/movie-icon.svg'/>
+                        <span>MOVIES</span>
+                    </a>
+                    <a>
+                        <img src='./images/series-icon.svg'/>
+                        <span>SERIES</span>
+                    </a>
+                </NavMenu>
+                <SignOut>
+                    <UserImg src={userPhoto} alt={userName}/>
+                    <Dropdown>
+                        <span onClick={handleLogOut}>Log Out</span>
+                    </Dropdown>
+                </SignOut>  
+                </>
+            ) : (<Login onClick={handleSignIn}>Login</Login>)
+        }
+        
+        
     </Nav>
   )
 }
@@ -57,6 +114,7 @@ const Nav = styled.nav`
     background: #090b13;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 36px;
 `
 
@@ -134,4 +192,28 @@ const Login = styled.a`
         border-color: transparent;
     }
 
+`
+
+const Dropdown = styled.div`
+    position: absolute;
+    top: 60px;
+    right: 30px;
+    background:#162340;
+    border-radius:2px;
+    padding: 10px 25px;
+    z-index:9;
+    opacity: 0;
+
+    &:hover{
+        background: #0f1930;
+    }
+`
+const SignOut = styled.div`
+    cursor: pointer;
+    &:hover{
+        ${Dropdown}{
+            opacity:1;
+            transition-duration:500ms;
+        }
+    }
 `
