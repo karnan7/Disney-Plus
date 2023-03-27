@@ -5,7 +5,7 @@ import Login from './components/Login';
 import Details from './components/Details';
 import Header from './components/Header';
 import Home from './components/Home';
-import { Counter } from './features/counter/Counter';
+
 
 function App() {
   return (
