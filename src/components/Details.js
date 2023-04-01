@@ -1,14 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import db from '../config/firebase'
+
 
 const Details = () => {
+    const { id } = useParams();
+    const [ detailData, setDetailData ] = useState({});
+
+    useEffect(() => {
+        db.collection('movies').doc(id)
+        .get()
+        .then((doc) => {
+            if(doc){
+                setDetailData(doc.data());
+            }else{
+                console.log("no such movie in database");
+            }
+        })
+        .catch((err) => {
+            console.log("Error getting movie", err);
+        })
+    }, [id] )
+
   return (
     <Container>
         <Background>
-            <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4F39B7E16726ECF419DD7C49E011DD95099AA20A962B0B10AA1881A70661CE45/scale?width=1440&aspectRatio=1.78&format=jpeg"/>
+            <img src={detailData.backgroundImg} alt={detailData.title}/>
         </Background>
         <ImageTitle>
-            <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1440&aspectRatio=1.78'/>
+            <img src={detailData.titleImg} alt={detailData.title}/>
         </ImageTitle>
         <Controls>
             <PlayButton>
@@ -27,10 +48,10 @@ const Details = () => {
             </GroupButton>
         </Controls>
         <SubTitle>
-            2018 . 7m . Family, Fantasy, Kids, Animation
+            {detailData.subTitle}
         </SubTitle>
         <Description>
-            A Chinese mom who's sad when her grown son leaves  home gets another chance at motherhood when one of her dumplings springs to life. But she finds that nothing stays cute and small forever.
+            {detailData.description}
         </Description>
     </Container>
   )
@@ -39,9 +60,12 @@ const Details = () => {
 export default Details;
 
 const Container = styled.div`
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 250px);
     padding: 0 calc(3.5vw + 5px);
     position: relative;
+    overflow-x: hidden;
+    display: block;
+    top: 72px;
     
 
 `
@@ -58,6 +82,10 @@ const Background= styled.div`
         width: 100%;
         height: 100%;
         object-fit: Cover;
+
+        @media (max-width: 768px) {
+            width: initial;
+          } 
     }
 `
 const ImageTitle = styled.div`

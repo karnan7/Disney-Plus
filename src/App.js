@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "./App.css";
 import Login from './components/Login';
 import Details from './components/Details';
@@ -14,8 +14,8 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/details" element={<Details/>}/>
+          <Route path="/home" element={<Home/>}/>
+          <Route path="/detail/:id" element={<Details/>}/>
         </Routes>
       </Router>
       

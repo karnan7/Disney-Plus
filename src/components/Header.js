@@ -2,12 +2,10 @@ import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import {auth, provider} from "../config/firebase"
 import {useDispatch,useSelector} from 'react-redux';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import {
-    selectUserEmail,
     selectUserName,
     selectUserPhoto,
-    selectUserLoginDetails,
     setUserLoginDetails,
     setSignOutState
 } from '../features/user/userSlice'
@@ -23,7 +21,7 @@ const Header = () => {
         auth.onAuthStateChanged(async (user) => {
             if(user){
                 setUser(user);
-                navigate("/")
+                navigate("/home")
             }
         })
     }, [userName])
@@ -61,33 +59,33 @@ const Header = () => {
 
   return (
     <Nav>
-        <Logo src='./images/logo.svg'/>
+        <Link to='/Home'><Logo src='./images/logo.svg'/></Link>
         {
             (userName) ? (
                 <>
                 <NavMenu>
-                    <a href='/'>
-                        <img src='./images/home-icon.svg'/>
+                    <a href='/Home'>
+                        <img src='./images/home-icon.svg' alt='home'/>
                         <span>HOME</span>
                     </a>
                     <a>
-                        <img src='./images/search-icon.svg'/>
+                        <img src='./images/search-icon.svg' alt='search'/>
                         <span>SEARCH</span>
                     </a>
                     <a>
-                        <img src='./images/watchlist-icon.svg'/>
+                        <img src='./images/watchlist-icon.svg' alt='watchlist'/>
                         <span>WATCHLIST</span>
                     </a>
                     <a>
-                        <img src='./images/original-icon.svg'/>
+                        <img src='./images/original-icon.svg' alt='original'/>
                         <span>ORIGINAL</span>
                     </a>
                     <a>
-                        <img src='./images/movie-icon.svg'/>
+                        <img src='./images/movie-icon.svg' alt='movie'/>
                         <span>MOVIES</span>
                     </a>
                     <a>
-                        <img src='./images/series-icon.svg'/>
+                        <img src='./images/series-icon.svg' alt='series'/>
                         <span>SERIES</span>
                     </a>
                 </NavMenu>
