@@ -36,6 +36,7 @@ const ImgSlider = () => {
 export default ImgSlider;
 
 const Carousel = styled(Slider)`
+    margin-top: 70px;
     .slick-list{
         overflow: visible;
     }
