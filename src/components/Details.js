@@ -33,18 +33,18 @@ const Details = () => {
         </ImageTitle>
         <Controls>
             <PlayButton>
-                <img src='/images/play-icon-black.png'/>
+                <img src='/images/play-icon-black.png' alt='playbutton'/>
                 <span>Play</span>
             </PlayButton>
             <TrailerButton>
-                <img src='/images/play-icon-white.png'/>
+                <img src='/images/play-icon-white.png' alt='trailerbutton'/>
                 <span>Trailer</span>
             </TrailerButton>
             <AddButton>
                 <span>+</span>
             </AddButton>
             <GroupButton>
-                <img src='/images/group-icon.png'/>
+                <img src='/images/group-icon.png' alt='groupbutton'/>
             </GroupButton>
         </Controls>
         <SubTitle>
@@ -104,6 +104,7 @@ const Controls = styled.div`
     display:flex;
     gap: 22px;
     align-items: center;
+    margin-top:30px;
 
 `
 const PlayButton = styled.button`

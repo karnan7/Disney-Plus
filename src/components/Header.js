@@ -42,7 +42,7 @@ const Header = () => {
         .signOut()
         .then(() => {
             dispatch(setSignOutState());
-            navigate("/login")
+            navigate("/")
         })
         .catch((error) => error.message);
     }
@@ -117,7 +117,6 @@ const Nav = styled.nav`
     justify-content: space-between;
     align-items: center;
     padding: 0 36px;
-    letter-spacing: 16px;
     z-index: 3;
 `
 

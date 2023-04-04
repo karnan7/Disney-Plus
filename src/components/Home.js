@@ -15,12 +15,13 @@ import { selectUserName } from '../features/user/userSlice'
 const Home = () => {
   const dispatch = useDispatch();
   const userName = useSelector(selectUserName);
-  let recommends = [];
-  let newDisney = [];
-  let originals = [];
-  let trending = [];
+  
 
   useEffect (() => {
+    let recommends = [];
+    let newDisney = [];
+    let originals = [];
+    let trending = [];
     db.collection('movies').onSnapshot((snapshot) => {
       snapshot.docs.map((doc) => {
         switch(doc.data().type){
@@ -52,7 +53,7 @@ const Home = () => {
       )
 
     })
-  }, [userName] )
+  }, [userName]);
   return (
     <Container>
         <ImgSlider/>
